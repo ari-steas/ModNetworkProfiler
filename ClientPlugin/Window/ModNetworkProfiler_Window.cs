@@ -24,5 +24,20 @@ namespace ClientPlugin.Window
         {
 
         }
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void HideAllButton_Click(object sender, EventArgs e)
+        {
+            NetworkDownList.CollapseAll();
+        }
+
+        private void ShowAllButton_Click(object sender, EventArgs e)
+        {
+            NetworkDownList.ExpandAll();
+        }
     }
 }

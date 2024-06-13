@@ -17,14 +17,15 @@ namespace ClientPlugin.Patches
             ref Action<ushort, byte[], ulong, bool> messageHandler)
         {
             Tracker?.RegisterNetworkHandler(id, messageHandler.Method.DeclaringType);
-            messageHandler += (ushort msgid, byte[] msgdata, ulong msgsender, bool d) => Tracker.LogReceiveMessage(msgid, msgdata.Length);
+            messageHandler += (ushort msgid, byte[] msgdata, ulong msgsender, bool d) => Tracker.LogReceiveMessage(id, msgdata.Length);
         }
 
         [HarmonyPrefix]
         [HarmonyPatch(nameof(MyModAPIHelper.MyMultiplayer.RegisterMessageHandler))]
-        public static void RegisterMessageHandlerPrefix(ushort id, Action<byte[]> messageHandler)
+        public static void RegisterMessageHandlerPrefix(ushort id, ref Action<byte[]> messageHandler)
         {
             Tracker?.RegisterNetworkHandler(id, messageHandler.Method.DeclaringType);
+            messageHandler += (byte[] msgdata) => Tracker.LogReceiveMessage(id, msgdata.Length);
         }
 
         [HarmonyPrefix]
