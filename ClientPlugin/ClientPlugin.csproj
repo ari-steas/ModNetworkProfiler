@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A061FC6C-713E-42CD-B413-151AC8A5074C}</ProjectGuid>
+    <ProjectGuid>{8E46D16A-8D97-4B98-BFD8-9A1D97C8F8EC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ClientPlugin</RootNamespace>
-    <AssemblyName>PluginTemplate</AssemblyName>
+    <AssemblyName>ModNetworkProfiler</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <LangVersion>7.3</LangVersion>
@@ -183,6 +183,7 @@
     <Reference Include="System.Diagnostics.Tracing, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <HintPath>..\Bin64\System.Diagnostics.Tracing.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <HintPath>..\Bin64\System.Drawing.Primitives.dll</HintPath>
     </Reference>
@@ -405,6 +406,8 @@
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
       <HintPath>..\Bin64\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.ReaderWriter, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <HintPath>..\Bin64\System.Xml.ReaderWriter.dll</HintPath>
@@ -490,8 +493,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProfilingTracker.cs" />
+    <Compile Include="Window\ModNetworkProfiler_Window.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\ModNetworkProfiler_Window.Designer.cs">
+      <DependentUpon>ModNetworkProfiler_Window.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Patches\NetworkingPatch.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Window\ProfileGraph.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="deploy.bat" />
@@ -503,6 +515,12 @@
   <ItemGroup>
     <PackageReference Include="Lib.Harmony" Version="2.3.3" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Window\ModNetworkProfiler_Window.resx">
+      <DependentUpon>ModNetworkProfiler_Window.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>call "$(ProjectDir)\deploy.bat" "$(TargetPath)" "$(SolutionName)"</PostBuildEvent>
