@@ -25,7 +25,7 @@ namespace ClientPlugin
         {
             DeclaringTypeMap[networkId] = declaringType;
             IncomingMessagesTick[networkId] = new Queue<Message>();
-            Plugin.Window?.RegisterDownHandler(declaringType.FullName, networkId);
+            Plugin.Window?.RegisterDownHandler(GetNetworkIdName(networkId), networkId);
         }
 
         public void UnregisterNetworkHandler(ushort networkId)
@@ -147,7 +147,7 @@ namespace ClientPlugin
         public string GetNetworkIdName(ushort networkId)
         {
             var type = DeclaringTypeMap.GetValueOrDefault(networkId, null);
-            return type == null ? networkId.ToString() : type.FullName;
+            return type?.FullName + "::" + networkId;
         }
 
         public class Message

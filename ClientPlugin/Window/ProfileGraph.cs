@@ -59,16 +59,24 @@ namespace ClientPlugin.Window
                 //series["PixelPointWidth"] = "40";
                 //series.BorderWidth = 2;
 
+                int[] aggregatedData = new int[tracker.LoggedInterval / TimeSpan.TicksPerSecond + 1];
+                for (int i = 0; i < aggregatedData.Length; i++)
+                    aggregatedData[i] = 0;
+
                 foreach (var data in tracker.GetAllPacketsDown(networkId))
                 {
-                    var point = series.Points[series.Points.AddXY((decimal)(data.Timestamp - time)/TimeSpan.TicksPerSecond, data.Size)];
-                    //point.SetCustomProperty("LabelStyle", "Bottom");
+                    int timeOffset = (int) Math.Round((decimal)(time - data.Timestamp) / TimeSpan.TicksPerSecond);
+                    //if (timeOffset < aggregatedData.Length)
+                    aggregatedData[timeOffset] += data.Size;
                 }
 
-                //for (int i = (int) -(tracker.LoggedInterval / TimeSpan.TicksPerSecond); i <= 0; i++)
-                //{
-                //    series.Points.AddXY(i, 0);
-                //}
+                for (int i = 0; i < aggregatedData.Length; i++)
+                {
+                    if (aggregatedData[i] == 0)
+                        continue;
+                    var point = series.Points[series.Points.AddXY(-i, aggregatedData[i])];
+                    //point.SetCustomProperty("LabelStyle", "Bottom");
+                }
 
                 Chart.Series.Add(series);
             }

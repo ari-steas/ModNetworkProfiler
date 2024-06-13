@@ -96,7 +96,7 @@ namespace ClientPlugin.Window
                 NetworkDownList.BeginUpdate();
                 foreach (var packetTypeKvp in Tracker.DeclaringTypeMap)
                 {
-                    var node = NetworkDownList.Nodes[packetTypeKvp.Value.FullName];
+                    var node = NetworkDownList.Nodes[Tracker.GetNetworkIdName(packetTypeKvp.Key)];
                     if (node == null || !node.IsExpanded)
                         continue;
                     trackedTypes.Add(packetTypeKvp.Key);
