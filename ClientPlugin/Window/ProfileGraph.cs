@@ -13,6 +13,7 @@ namespace ClientPlugin.Window
         public Chart Chart;
         private Random _random = new Random();
         private Dictionary<long, Color> typeColorMap = new Dictionary<long, Color>();
+        public List<ushort> TrackedTypes = new List<ushort>();
 
         public ProfileGraph(Chart chart)
         {
@@ -30,7 +31,7 @@ namespace ClientPlugin.Window
             area.AxisY.InterlacedColor = Color.White;
         }
 
-        public void Update(ProfilingTracker tracker, List<ushort> trackedTypes)
+        public void Update(ProfilingTracker tracker)
         {
             ChartArea area = Chart.ChartAreas[0];
             if (area.AxisX.Minimum > -tracker.LoggedInterval / TimeSpan.TicksPerSecond)
@@ -40,7 +41,7 @@ namespace ClientPlugin.Window
             long time = DateTime.Now.Ticks;
 
             HashSet<string> usedLegends = new HashSet<string>();
-            foreach (var networkId in trackedTypes)
+            foreach (var networkId in TrackedTypes)
             {
                 string name = tracker.GetNetworkIdName(networkId);
                 if (!usedLegends.Add(name) || tracker.IncomingMessagesTick[networkId].Count == 0)
@@ -65,7 +66,7 @@ namespace ClientPlugin.Window
 
                 foreach (var data in tracker.GetAllPacketsDown(networkId))
                 {
-                    int timeOffset = (int) Math.Round((decimal)(time - data.Timestamp) / TimeSpan.TicksPerSecond);
+                    int timeOffset = (int) ((decimal)(time - data.Timestamp) / TimeSpan.TicksPerSecond);
                     //if (timeOffset < aggregatedData.Length)
                     aggregatedData[timeOffset] += data.Size;
                 }

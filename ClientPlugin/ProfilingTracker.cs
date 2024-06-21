@@ -56,7 +56,6 @@ namespace ClientPlugin
 
         #endregion
 
-        private Message[] messageArrayBuffer = Array.Empty<Message>();
         public int GetNetworkLoadDown(ushort networkId, out int packetCount)
         {
             packetCount = 0;
@@ -68,15 +67,15 @@ namespace ClientPlugin
 
             lock (queue)
             {
-                messageArrayBuffer = queue.ToArray();
+                foreach (var item in queue)
+                {
+                    total += item.Size;
+                }
+
+                packetCount = queue.Count;
             }
 
-            foreach (var item in messageArrayBuffer)
-            {
-                total += item.Size;
-            }
-
-            packetCount = messageArrayBuffer.Length;
+            
             return total;
         }
 
@@ -91,15 +90,15 @@ namespace ClientPlugin
 
             lock (queue)
             {
-                messageArrayBuffer = queue.ToArray();
+                foreach (var item in queue)
+                {
+                    total += item.Size;
+                }
+
+                packetCount = queue.Count;
             }
 
-            foreach (var item in messageArrayBuffer)
-            {
-                total += item.Size;
-            }
-
-            packetCount = messageArrayBuffer.Length;
+            
             return total;
         }
 

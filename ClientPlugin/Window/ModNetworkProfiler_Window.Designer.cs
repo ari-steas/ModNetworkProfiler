@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using VRage.Network;
@@ -18,6 +20,7 @@ namespace ClientPlugin.Window
 
         private bool IsUpdating = false;
         private ProfileGraph ProfileGraph = null;
+        private Stopwatch _watch = new Stopwatch();
 
 
         [DllImport("DwmApi")] //System.Runtime.InteropServices
@@ -72,6 +75,8 @@ namespace ClientPlugin.Window
             }
 
             IsUpdating = true;
+            if (!_watch.IsRunning)
+                _watch.Start();
 
             try
             {
@@ -111,7 +116,13 @@ namespace ClientPlugin.Window
                 }
                 NetworkDownList.EndUpdate();
 
-                ProfileGraph.Update(Tracker, trackedTypes);
+                ProfileGraph.TrackedTypes = trackedTypes;
+
+                if (_watch.ElapsedMilliseconds > 1000)
+                {
+                    _watch.Restart();
+                    ProfileGraph.Update(Tracker);
+                }
             }
             catch (Exception ex)
             {
