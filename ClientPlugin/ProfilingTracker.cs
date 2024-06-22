@@ -114,32 +114,38 @@ namespace ClientPlugin
             // Removes old data
             foreach (var queue in OutgoingMessagesTick.Values)
             {
-                while (queue.Count > 0 && queue.Peek().Timestamp < ticksNow - LoggedInterval)
+                lock (queue)
                 {
-                    queue.Dequeue();
+                    while (queue.Count > 0 && queue.Peek().Timestamp < ticksNow - LoggedInterval)
+                    {
+                        queue.Dequeue();
+                    }
+
+                    if (queue.Count == 0)
+                        continue;
+
+                    long queueInterval = ticksNow - queue.Peek().Timestamp;
+                    if (queueInterval > CurrentInterval)
+                        CurrentInterval = queueInterval;
                 }
-
-                if (queue.Count == 0)
-                    continue;
-
-                long queueInterval = ticksNow - queue.Peek().Timestamp;
-                if (queueInterval > CurrentInterval)
-                    CurrentInterval = queueInterval;
             }
 
             foreach (var queue in IncomingMessagesTick.Values)
             {
-                while (queue.Count > 0 && queue.Peek().Timestamp < ticksNow - LoggedInterval)
+                lock (queue)
                 {
-                    queue.Dequeue();
+                    while (queue.Count > 0 && queue.Peek().Timestamp < ticksNow - LoggedInterval)
+                    {
+                        queue.Dequeue();
+                    }
+
+                    if (queue.Count == 0)
+                        continue;
+
+                    long queueInterval = ticksNow - queue.Peek().Timestamp;
+                    if (queueInterval > CurrentInterval)
+                        CurrentInterval = queueInterval;
                 }
-
-                if (queue.Count == 0)
-                    continue;
-
-                long queueInterval = ticksNow - queue.Peek().Timestamp;
-                if (queueInterval > CurrentInterval)
-                    CurrentInterval = queueInterval;
             }
         }
 

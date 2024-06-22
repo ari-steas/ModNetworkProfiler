@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Threading;
 using ClientPlugin.Window;
 using HarmonyLib;
+using Sandbox.ModAPI;
 using VRage.Plugins;
 
 namespace ClientPlugin
