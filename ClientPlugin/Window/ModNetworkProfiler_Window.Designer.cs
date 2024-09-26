@@ -238,15 +238,18 @@ namespace ClientPlugin.Window
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.HideAllButton = new System.Windows.Forms.Button();
             this.ShowAllButton = new System.Windows.Forms.Button();
+            this.playButton = new System.Windows.Forms.Button();
+            this.pauseButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // NetworkDownTitle
             // 
             this.NetworkDownTitle.AutoSize = true;
-            this.NetworkDownTitle.Location = new System.Drawing.Point(54, 43);
+            this.NetworkDownTitle.Location = new System.Drawing.Point(40, 35);
+            this.NetworkDownTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.NetworkDownTitle.Name = "NetworkDownTitle";
-            this.NetworkDownTitle.Size = new System.Drawing.Size(93, 16);
+            this.NetworkDownTitle.Size = new System.Drawing.Size(78, 13);
             this.NetworkDownTitle.TabIndex = 0;
             this.NetworkDownTitle.Text = "Network Down";
             this.NetworkDownTitle.Click += new System.EventHandler(this.label1_Click);
@@ -256,17 +259,19 @@ namespace ClientPlugin.Window
             this.NetworkDownList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.NetworkDownList.ForeColor = System.Drawing.Color.White;
             this.NetworkDownList.LineColor = System.Drawing.Color.White;
-            this.NetworkDownList.Location = new System.Drawing.Point(57, 83);
+            this.NetworkDownList.Location = new System.Drawing.Point(43, 67);
+            this.NetworkDownList.Margin = new System.Windows.Forms.Padding(2);
             this.NetworkDownList.Name = "NetworkDownList";
-            this.NetworkDownList.Size = new System.Drawing.Size(630, 720);
+            this.NetworkDownList.Size = new System.Drawing.Size(474, 586);
             this.NetworkDownList.TabIndex = 1;
             // 
             // DebugLabel
             // 
             this.DebugLabel.AutoSize = true;
-            this.DebugLabel.Location = new System.Drawing.Point(785, 809);
+            this.DebugLabel.Location = new System.Drawing.Point(589, 657);
+            this.DebugLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.DebugLabel.Name = "DebugLabel";
-            this.DebugLabel.Size = new System.Drawing.Size(82, 16);
+            this.DebugLabel.Size = new System.Drawing.Size(66, 13);
             this.DebugLabel.TabIndex = 2;
             this.DebugLabel.Text = "Errors: None";
             this.DebugLabel.Click += new System.EventHandler(this.label1_Click_1);
@@ -281,10 +286,11 @@ namespace ClientPlugin.Window
             this.chart1.Cursor = System.Windows.Forms.Cursors.Default;
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(788, 83);
+            this.chart1.Location = new System.Drawing.Point(591, 67);
+            this.chart1.Margin = new System.Windows.Forms.Padding(2);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
-            this.chart1.Size = new System.Drawing.Size(726, 720);
+            this.chart1.Size = new System.Drawing.Size(544, 585);
             this.chart1.TabIndex = 3;
             this.chart1.Text = "chart1";
             this.chart1.Click += new System.EventHandler(this.chart1_Click);
@@ -293,9 +299,10 @@ namespace ClientPlugin.Window
             // 
             this.HideAllButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.HideAllButton.ForeColor = System.Drawing.Color.White;
-            this.HideAllButton.Location = new System.Drawing.Point(57, 810);
+            this.HideAllButton.Location = new System.Drawing.Point(43, 658);
+            this.HideAllButton.Margin = new System.Windows.Forms.Padding(2);
             this.HideAllButton.Name = "HideAllButton";
-            this.HideAllButton.Size = new System.Drawing.Size(90, 23);
+            this.HideAllButton.Size = new System.Drawing.Size(68, 19);
             this.HideAllButton.TabIndex = 4;
             this.HideAllButton.Text = "Hide All";
             this.HideAllButton.UseVisualStyleBackColor = false;
@@ -305,20 +312,45 @@ namespace ClientPlugin.Window
             // 
             this.ShowAllButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ShowAllButton.ForeColor = System.Drawing.Color.White;
-            this.ShowAllButton.Location = new System.Drawing.Point(153, 809);
+            this.ShowAllButton.Location = new System.Drawing.Point(115, 657);
+            this.ShowAllButton.Margin = new System.Windows.Forms.Padding(2);
             this.ShowAllButton.Name = "ShowAllButton";
-            this.ShowAllButton.Size = new System.Drawing.Size(90, 23);
+            this.ShowAllButton.Size = new System.Drawing.Size(68, 19);
             this.ShowAllButton.TabIndex = 5;
             this.ShowAllButton.Text = "Expand All";
             this.ShowAllButton.UseVisualStyleBackColor = false;
             this.ShowAllButton.Click += new System.EventHandler(this.ShowAllButton_Click);
             // 
+            // playButton
+            // 
+            this.playButton.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.playButton.Location = new System.Drawing.Point(221, 657);
+            this.playButton.Name = "playButton";
+            this.playButton.Size = new System.Drawing.Size(75, 23);
+            this.playButton.TabIndex = 6;
+            this.playButton.Text = "PLAY";
+            this.playButton.UseVisualStyleBackColor = true;
+            this.playButton.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // pauseButton
+            // 
+            this.pauseButton.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.pauseButton.Location = new System.Drawing.Point(303, 657);
+            this.pauseButton.Name = "pauseButton";
+            this.pauseButton.Size = new System.Drawing.Size(75, 23);
+            this.pauseButton.TabIndex = 7;
+            this.pauseButton.Text = "PAUSE";
+            this.pauseButton.UseVisualStyleBackColor = true;
+            this.pauseButton.Click += new System.EventHandler(this.button2_Click);
+            // 
             // ModNetworkProfiler_Window
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(1580, 879);
+            this.ClientSize = new System.Drawing.Size(1185, 714);
+            this.Controls.Add(this.pauseButton);
+            this.Controls.Add(this.playButton);
             this.Controls.Add(this.ShowAllButton);
             this.Controls.Add(this.HideAllButton);
             this.Controls.Add(this.chart1);
@@ -326,6 +358,7 @@ namespace ClientPlugin.Window
             this.Controls.Add(this.NetworkDownList);
             this.Controls.Add(this.NetworkDownTitle);
             this.ForeColor = System.Drawing.SystemColors.Control;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ModNetworkProfiler_Window";
             this.Text = "ModNetworkProfiler";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -343,5 +376,7 @@ namespace ClientPlugin.Window
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private Button HideAllButton;
         private Button ShowAllButton;
+        private Button playButton;
+        private Button pauseButton;
     }
 }

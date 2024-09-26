@@ -27,7 +27,8 @@ namespace ClientPlugin
             Harmony harmony = new Harmony(Name);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
 
-            Window = new ModNetworkProfiler_Window();
+            // Pass the ProfilingTracker instance (Tracker) to the window
+            Window = new ModNetworkProfiler_Window(Tracker);
 
             new Thread(() =>
             {
