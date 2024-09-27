@@ -493,6 +493,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Patches\SerializationPatch.cs" />
     <Compile Include="ProfilingTracker.cs" />
     <Compile Include="Window\ModNetworkProfiler_Window.cs">
       <SubType>Form</SubType>

@@ -230,8 +230,8 @@ namespace ClientPlugin.Window
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.NetworkDownTitle = new System.Windows.Forms.Label();
             this.NetworkDownList = new System.Windows.Forms.TreeView();
             this.DebugLabel = new System.Windows.Forms.Label();
@@ -242,9 +242,13 @@ namespace ClientPlugin.Window
             this.pauseButton = new System.Windows.Forms.Button();
             this.ListLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.GraphLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.ModeRadioButton_Network = new System.Windows.Forms.RadioButton();
+            this.ModeLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.ModeRadioButton_Serialization = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.ListLayoutPanel.SuspendLayout();
             this.GraphLayoutPanel.SuspendLayout();
+            this.ModeLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // NetworkDownTitle
@@ -283,11 +287,11 @@ namespace ClientPlugin.Window
             this.chart1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.chart1.BackSecondaryColor = System.Drawing.Color.Transparent;
             this.chart1.BorderlineColor = System.Drawing.Color.Transparent;
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
             this.chart1.Cursor = System.Windows.Forms.Cursors.Default;
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(3, 2);
             this.chart1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chart1.Name = "chart1";
@@ -357,6 +361,7 @@ namespace ClientPlugin.Window
             this.ListLayoutPanel.Controls.Add(this.playButton);
             this.ListLayoutPanel.Controls.Add(this.ShowAllButton);
             this.ListLayoutPanel.Controls.Add(this.HideAllButton);
+            this.ListLayoutPanel.Controls.Add(this.ModeLayoutPanel);
             this.ListLayoutPanel.Location = new System.Drawing.Point(57, 43);
             this.ListLayoutPanel.Name = "ListLayoutPanel";
             this.ListLayoutPanel.Size = new System.Drawing.Size(631, 794);
@@ -370,6 +375,39 @@ namespace ClientPlugin.Window
             this.GraphLayoutPanel.Name = "GraphLayoutPanel";
             this.GraphLayoutPanel.Size = new System.Drawing.Size(725, 794);
             this.GraphLayoutPanel.TabIndex = 9;
+            // 
+            // ModeRadioButton_Network
+            // 
+            this.ModeRadioButton_Network.AutoSize = true;
+            this.ModeRadioButton_Network.Checked = true;
+            this.ModeRadioButton_Network.Location = new System.Drawing.Point(3, 3);
+            this.ModeRadioButton_Network.Name = "ModeRadioButton_Network";
+            this.ModeRadioButton_Network.Size = new System.Drawing.Size(149, 20);
+            this.ModeRadioButton_Network.TabIndex = 8;
+            this.ModeRadioButton_Network.TabStop = true;
+            this.ModeRadioButton_Network.Text = "Network Load Mode";
+            this.ModeRadioButton_Network.UseVisualStyleBackColor = true;
+            this.ModeRadioButton_Network.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
+            // ModeLayoutPanel
+            // 
+            this.ModeLayoutPanel.Controls.Add(this.ModeRadioButton_Network);
+            this.ModeLayoutPanel.Controls.Add(this.ModeRadioButton_Serialization);
+            this.ModeLayoutPanel.Location = new System.Drawing.Point(435, 743);
+            this.ModeLayoutPanel.Name = "ModeLayoutPanel";
+            this.ModeLayoutPanel.Size = new System.Drawing.Size(193, 51);
+            this.ModeLayoutPanel.TabIndex = 9;
+            // 
+            // ModeRadioButton_Serialization
+            // 
+            this.ModeRadioButton_Serialization.AutoSize = true;
+            this.ModeRadioButton_Serialization.Location = new System.Drawing.Point(3, 29);
+            this.ModeRadioButton_Serialization.Name = "ModeRadioButton_Serialization";
+            this.ModeRadioButton_Serialization.Size = new System.Drawing.Size(139, 20);
+            this.ModeRadioButton_Serialization.TabIndex = 9;
+            this.ModeRadioButton_Serialization.Text = "Serialization Mode";
+            this.ModeRadioButton_Serialization.UseVisualStyleBackColor = true;
+            this.ModeRadioButton_Serialization.CheckedChanged += new System.EventHandler(this.ModeRadioButton_Serialization_CheckedChanged);
             // 
             // ModNetworkProfiler_Window
             // 
@@ -389,6 +427,8 @@ namespace ClientPlugin.Window
             this.ListLayoutPanel.PerformLayout();
             this.GraphLayoutPanel.ResumeLayout(false);
             this.GraphLayoutPanel.PerformLayout();
+            this.ModeLayoutPanel.ResumeLayout(false);
+            this.ModeLayoutPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -405,5 +445,8 @@ namespace ClientPlugin.Window
         private Button pauseButton;
         private FlowLayoutPanel ListLayoutPanel;
         private FlowLayoutPanel GraphLayoutPanel;
+        private FlowLayoutPanel ModeLayoutPanel;
+        private RadioButton ModeRadioButton_Network;
+        private RadioButton ModeRadioButton_Serialization;
     }
 }

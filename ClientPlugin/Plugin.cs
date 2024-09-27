@@ -16,6 +16,7 @@ namespace ClientPlugin
 
         public static ModNetworkProfiler_Window Window;
         public ProfilingTracker Tracker = new ProfilingTracker();
+        public Harmony Harmony;
 
 
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
@@ -24,8 +25,8 @@ namespace ClientPlugin
             Instance = this;
 
             // TODO: Put your one time initialization code here.
-            Harmony harmony = new Harmony(Name);
-            harmony.PatchAll(Assembly.GetExecutingAssembly());
+            Harmony = new Harmony(Name);
+            Harmony.PatchAll(Assembly.GetExecutingAssembly());
 
             // Pass the ProfilingTracker instance (Tracker) to the window
             Window = new ModNetworkProfiler_Window(Tracker);

@@ -59,5 +59,15 @@ namespace ClientPlugin.Window
             _profilingTracker.Pause(); // Trigger the pause action
             MessageBox.Show("Tracking paused.");
         }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            ModeRadioButton_Serialization.Checked = !ModeRadioButton_Network.Checked;
+        }
+
+        private void ModeRadioButton_Serialization_CheckedChanged(object sender, EventArgs e)
+        {
+            ModeRadioButton_Network.Checked = !ModeRadioButton_Serialization.Checked;
+        }
     }
 }

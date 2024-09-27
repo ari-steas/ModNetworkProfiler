@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
@@ -57,6 +58,21 @@ namespace ClientPlugin
             {
                 IncomingMessagesTick[networkId].Enqueue(new Message(messageSize));
             }
+        }
+
+
+        private StreamWriter si = File.CreateText(@"C:\Users\jnick\Downloads\in.txt");
+        private StreamWriter so = File.CreateText(@"C:\Users\jnick\Downloads\out.txt");
+        public void LogSerialize(object obj, long length)
+        {
+            so.WriteLine($"S{length}: " + obj.GetType().FullName);
+            so.Flush();
+        }
+
+        public void LogDeserialize(object obj, long length)
+        {
+            si.WriteLine($"D: {length}: " + obj.GetType().FullName);
+            si.Flush();
         }
 
         #endregion
