@@ -61,18 +61,18 @@ namespace ClientPlugin
         }
 
 
-        private StreamWriter si = File.CreateText(@"C:\Users\jnick\Downloads\in.txt");
-        private StreamWriter so = File.CreateText(@"C:\Users\jnick\Downloads\out.txt");
+        //private StreamWriter si = File.CreateText(@"C:\Users\jnick\Downloads\in.txt");
+        //private StreamWriter so = File.CreateText(@"C:\Users\jnick\Downloads\out.txt");
         public void LogSerialize(object obj, long length)
         {
-            so.WriteLine($"S{length}: " + obj.GetType().FullName);
-            so.Flush();
+            //so.WriteLine($"S{length}: " + obj.GetType().FullName);
+            //so.Flush();
         }
 
         public void LogDeserialize(object obj, long length)
         {
-            si.WriteLine($"D: {length}: " + obj.GetType().FullName);
-            si.Flush();
+            //si.WriteLine($"D: {length}: " + obj.GetType().FullName);
+            //si.Flush();
         }
 
         #endregion
