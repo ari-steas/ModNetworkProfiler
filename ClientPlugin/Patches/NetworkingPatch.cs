@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using HarmonyLib;
-using Sandbox.Game.World;
+using ModNetworkProfiler.Profiling;
 using Sandbox.ModAPI;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
 
-namespace ClientPlugin.Patches
+namespace ModNetworkProfiler.Patches
 {
     [HarmonyPatch(typeof(MyModAPIHelper.MyMultiplayer))]
     public static class NetworkingPatch

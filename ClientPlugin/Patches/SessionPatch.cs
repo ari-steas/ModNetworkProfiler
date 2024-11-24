@@ -1,10 +1,11 @@
 ﻿using HarmonyLib;
+using ModNetworkProfiler.Profiling;
 using Sandbox.Game.World;
-using Sandbox.ModAPI;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
 
-namespace ClientPlugin.Patches
+namespace ModNetworkProfiler.Patches
 {
     [HarmonyPatch(typeof(MySession))]
     internal class SessionPatch

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms.DataVisualization.Charting;
+using ModNetworkProfiler.Profiling;
 
-namespace ClientPlugin.Window
+namespace ModNetworkProfiler.Window
 {
     internal class ProfileGraph
     {

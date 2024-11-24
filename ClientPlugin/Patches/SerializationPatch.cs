@@ -1,20 +1,13 @@
-﻿using HarmonyLib;
-using Sandbox.Game.Entities.Blocks;
-using Sandbox.ModAPI;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using HarmonyLib;
 using ProtoBuf;
-using VRage.Game.ModAPI;
 using ProtoBuf.Meta;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
 
-namespace ClientPlugin.Patches
+namespace ModNetworkProfiler.Patches
 {
     [HarmonyPatch(typeof(TypeModel))]
     class SerializeToBinaryPatch

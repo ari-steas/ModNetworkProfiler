@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Reflection;
 using System.Threading;
-using ClientPlugin.Window;
 using HarmonyLib;
-using Sandbox.ModAPI;
+using ModNetworkProfiler.Profiling;
+using ModNetworkProfiler.Window;
 using VRage.Plugins;
 
-namespace ClientPlugin
+namespace ModNetworkProfiler
 {
     // ReSharper disable once UnusedType.Global
     public class Plugin : IPlugin, IDisposable

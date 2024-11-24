@@ -7,7 +7,7 @@
     <ProjectGuid>{8E46D16A-8D97-4B98-BFD8-9A1D97C8F8EC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ClientPlugin</RootNamespace>
+    <RootNamespace>ModNetworkProfiler</RootNamespace>
     <AssemblyName>ModNetworkProfiler</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

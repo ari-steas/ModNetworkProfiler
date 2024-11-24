@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using ModNetworkProfiler.Profiling;
 
-namespace ClientPlugin.Window
+namespace ModNetworkProfiler.Window
 {
     public partial class ModNetworkProfiler_Window : Form
     {

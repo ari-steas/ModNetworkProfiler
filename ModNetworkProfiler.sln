@@ -1,6 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientPlugin", "ClientPlugin\ClientPlugin.csproj", "{8E46D16A-8D97-4B98-BFD8-9A1D97C8F8EC}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35506.116 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModNetworkProfiler", "ClientPlugin\ModNetworkProfiler.csproj", "{8E46D16A-8D97-4B98-BFD8-9A1D97C8F8EC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{51D21C35-7ECF-493B-A2A0-A3C823D9F8D3}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,9 +21,12 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8E46D16A-8D97-4B98-BFD8-9A1D97C8F8EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8E46D16A-8D97-4B98-BFD8-9A1D97C8F8EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E46D16A-8D97-4B98-BFD8-9A1D97C8F8EC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{8E46D16A-8D97-4B98-BFD8-9A1D97C8F8EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E46D16A-8D97-4B98-BFD8-9A1D97C8F8EC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E46D16A-8D97-4B98-BFD8-9A1D97C8F8EC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{8E46D16A-8D97-4B98-BFD8-9A1D97C8F8EC}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

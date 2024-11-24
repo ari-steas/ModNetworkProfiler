@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Net;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using VRage.Network;
+using ModNetworkProfiler.Profiling;
 
-namespace ClientPlugin.Window
+namespace ModNetworkProfiler.Window
 {
     partial class ModNetworkProfiler_Window
     {

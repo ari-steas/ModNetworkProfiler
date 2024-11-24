@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using HarmonyLib;
-using Sandbox.ModAPI;
 using VRage.FileSystem;
-using VRage.Private;
 
-namespace ClientPlugin.Profiling
+namespace ModNetworkProfiler.Profiling
 {
     internal class ProfilingLogger
     {

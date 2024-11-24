@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
-using ClientPlugin.Profiling;
-using Sandbox.ModAPI;
-using VRage.Network;
 using VRage.Utils;
 
-namespace ClientPlugin
+namespace ModNetworkProfiler.Profiling
 {
     public class ProfilingTracker
     {
