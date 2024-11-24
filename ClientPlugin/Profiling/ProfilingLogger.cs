@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HarmonyLib;
 using Sandbox.ModAPI;
 using VRage.FileSystem;
 using VRage.Private;
@@ -18,11 +19,13 @@ namespace ClientPlugin.Profiling
         private Dictionary<ushort, int> _dataBuffer = new Dictionary<ushort, int>();
         private StringBuilder _lineBuffer = new StringBuilder();
         private int _ticks = 0;
-        private bool _wasClosed = true;
+        private bool _wasClosed = false;
 
         public ProfilingLogger(string name)
         {
             _path = Path.Combine(MyFileSystem.UserDataPath, $"ModNetworkProfiler_{name}.csv");
+            _outputFile = CreateFile();
+            _outputFile.WriteLine("Tick");
         }
 
         public void AddHandler(ushort id)
@@ -30,9 +33,13 @@ namespace ClientPlugin.Profiling
             if (_ids.Contains(id))
                 return;
 
+            _outputFile.Close();
             string existingText = File.ReadAllText(_path);
-            existingText = existingText.Insert(existingText.IndexOf('\n'), "," + id);
-            WriteLine(existingText);
+            existingText = existingText.Insert(existingText.IndexOf('\n')-1, "," + id);
+            _outputFile = CreateFile();
+            Write(existingText);
+            
+            _ids = _ids.AddToArray(id);
             _dataBuffer[id] = 0;
         }
 
@@ -49,7 +56,7 @@ namespace ClientPlugin.Profiling
             foreach (var id in _ids)
             {
                 _lineBuffer.Append(_dataBuffer[id] + ",");
-                if (_dataBuffer[id] == 0)
+                if (_dataBuffer[id] != 0)
                     hadNonZeroValue = true;
                 _dataBuffer[id] = 0;
             }
@@ -71,6 +78,7 @@ namespace ClientPlugin.Profiling
             _outputFile.Close();
             _ids = Array.Empty<ushort>();
             _dataBuffer.Clear();
+            _wasClosed = true;
         }
 
         private TextWriter CreateFile()
@@ -86,6 +94,19 @@ namespace ClientPlugin.Profiling
         }
 
         private void WriteLine(object text)
+        {
+            if (_wasClosed)
+            {
+                _wasClosed = false;
+                _outputFile = CreateFile();
+                _outputFile.WriteLine("Tick");
+            }
+
+            _outputFile.WriteLine(text);
+            _outputFile.Flush();
+        }
+
+        private void Write(object text)
         {
             if (_wasClosed)
             {

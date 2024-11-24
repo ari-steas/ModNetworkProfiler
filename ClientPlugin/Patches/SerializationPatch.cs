@@ -29,8 +29,8 @@ namespace ClientPlugin.Patches
         }
 
         [HarmonyPostfix]
-        [HarmonyPatch(nameof(ProtoBuf.Meta.TypeModel.Deserialize), typeof(Stream), typeof(object), typeof(Type))]
-        public static void DeserializePostfix(Stream source, object value, Type type, ref object __result)
+        [HarmonyPatch(nameof(ProtoBuf.Meta.TypeModel.Deserialize), typeof(Stream), typeof(object), typeof(Type), typeof(SerializationContext))]
+        public static void DeserializePostfix(Stream source, object value, Type type, SerializationContext context, ref object __result)
         {
             Plugin.Instance.Tracker.LogDeserialize(__result, source.Length);
             

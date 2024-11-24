@@ -111,8 +111,8 @@ namespace ClientPlugin.Window
                     int pktCountUp = -1;
                     int loadUp = Tracker.GetNetworkLoadUp(packetTypeKvp.Key, out pktCountUp);
 
-                    node.Nodes[1].Text = $"Packets: {pktCountUp}u | {pktCountDown}d";
-                    node.Nodes[2].Text = $"Network Load: {loadUp}u | {loadDown}d";
+                    node.Nodes[1].Text = $"Packets: {pktCountUp} up | {pktCountDown} down";
+                    node.Nodes[2].Text = $"Network Load: {loadUp}b up | {loadDown}b down";
                 }
                 NetworkDownList.EndUpdate();
 
@@ -150,8 +150,8 @@ namespace ClientPlugin.Window
             {
                 var newNode = NetworkDownList.Nodes.Add(fullName, fullName);
                 newNode.Nodes.Add($"Id: {id}");
-                newNode.Nodes.Add($"Packets: 0u | 0d");
-                newNode.Nodes.Add($"Network Load: 0u | 0d");
+                newNode.Nodes.Add($"Packets: 0 up | 0 down");
+                newNode.Nodes.Add($"Network Load: 0b up | 0b down");
                 newNode.Expand();
             }
             NetworkDownList.EndUpdate();
