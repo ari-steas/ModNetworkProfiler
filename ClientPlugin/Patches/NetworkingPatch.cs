@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using HarmonyLib;
 using Sandbox.Game.World;
 using Sandbox.ModAPI;
@@ -11,6 +12,8 @@ namespace ClientPlugin.Patches
     public static class NetworkingPatch
     {
         private static ProfilingTracker Tracker => Plugin.Instance?.Tracker;
+        private static Dictionary<ushort, Action<ushort, byte[], ulong, bool>> SecureMessageActions = new Dictionary<ushort, Action<ushort, byte[], ulong, bool>>();
+        private static Dictionary<ushort, Action<byte[]>> MessageActions = new Dictionary<ushort, Action<byte[]>>();
 
         [HarmonyPrefix]
         [HarmonyPatch(nameof(MyModAPIHelper.MyMultiplayer.RegisterSecureMessageHandler))]
@@ -18,7 +21,9 @@ namespace ClientPlugin.Patches
             ref Action<ushort, byte[], ulong, bool> messageHandler)
         {
             Tracker?.RegisterNetworkHandler(id, messageHandler.Method.DeclaringType);
-            messageHandler += (ushort msgid, byte[] msgdata, ulong msgsender, bool d) => Tracker.LogReceiveMessage(id, msgdata.Length);
+            SecureMessageActions[id] = (ushort msgid, byte[] msgdata, ulong msgsender, bool d) =>
+                Tracker.LogReceiveMessage(id, msgdata.Length);
+            messageHandler += SecureMessageActions[id];
         }
 
         [HarmonyPrefix]
@@ -26,22 +31,29 @@ namespace ClientPlugin.Patches
         public static void RegisterMessageHandlerPrefix(ushort id, ref Action<byte[]> messageHandler)
         {
             Tracker?.RegisterNetworkHandler(id, messageHandler.Method.DeclaringType);
-            messageHandler += (byte[] msgdata) => Tracker.LogReceiveMessage(id, msgdata.Length);
+            MessageActions[id] = (byte[] msgdata) => Tracker.LogReceiveMessage(id, msgdata.Length);
+            messageHandler += MessageActions[id];
         }
 
         [HarmonyPrefix]
         [HarmonyPatch(nameof(MyModAPIHelper.MyMultiplayer.UnregisterSecureMessageHandler))]
         public static void UnregisterSecureMessageHandlerPrefix(ushort id,
-            Action<ushort, byte[], ulong, bool> messageHandler)
+            ref Action<ushort, byte[], ulong, bool> messageHandler)
         {
-            Tracker?.UnregisterNetworkHandler(id);
+            if (!Tracker?.UnregisterNetworkHandler(id) ?? true)
+                return;
+            //messageHandler -= SecureMessageActions[id];
+            SecureMessageActions.Remove(id);
         }
 
         [HarmonyPrefix]
         [HarmonyPatch(nameof(MyModAPIHelper.MyMultiplayer.UnregisterMessageHandler))]
-        public static void UnregisterMessageHandlerPrefix(ushort id, Action<byte[]> messageHandler)
+        public static void UnregisterMessageHandlerPrefix(ushort id, ref Action<byte[]> messageHandler)
         {
-            Tracker?.UnregisterNetworkHandler(id);
+            if (!Tracker?.UnregisterNetworkHandler(id) ?? true)
+                return;
+            //messageHandler -= MessageActions[id];
+            MessageActions.Remove(id);
         }
 
         [HarmonyPrefix]

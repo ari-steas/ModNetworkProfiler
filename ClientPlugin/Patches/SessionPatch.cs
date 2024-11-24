@@ -1,5 +1,8 @@
 ﻿using HarmonyLib;
 using Sandbox.Game.World;
+using Sandbox.ModAPI;
+// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedType.Global
 
 namespace ClientPlugin.Patches
 {

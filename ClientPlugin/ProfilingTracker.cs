@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sandbox.ModAPI;
 using VRage.Network;
+using VRage.Utils;
 
 namespace ClientPlugin
 {
@@ -28,15 +29,18 @@ namespace ClientPlugin
             DeclaringTypeMap[networkId] = declaringType;
             IncomingMessagesTick[networkId] = new Queue<Message>();
             Plugin.Window?.RegisterDownHandler(GetNetworkIdName(networkId), networkId);
+            MyLog.Default.WriteLineAndConsole("[ModNetworkProfiler] Registered network handler " + networkId);
         }
 
-        public void UnregisterNetworkHandler(ushort networkId)
+        public bool UnregisterNetworkHandler(ushort networkId)
         {
             if (!DeclaringTypeMap.ContainsKey(networkId))
-                return;
+                return false;
             Plugin.Window?.UnregisterDownHandler(GetNetworkIdName(networkId));
             IncomingMessagesTick.Remove(networkId);
             DeclaringTypeMap.Remove(networkId);
+            MyLog.Default.WriteLineAndConsole("[ModNetworkProfiler] Unregistered network handler " + networkId);
+            return true;
         }
 
         public void LogSendMessage(ushort networkId, int messageSize)
@@ -79,7 +83,9 @@ namespace ClientPlugin
         public void UnregisterAll()
         {
             Plugin.Window?.UnregisterAll();
+            MyLog.Default.WriteLineAndConsole($"[ModNetworkProfiler] Unregistering {DeclaringTypeMap.Count} network handlers.");
             IncomingMessagesTick.Clear();
+            OutgoingMessagesTick.Clear();
             DeclaringTypeMap.Clear();
         }
 
