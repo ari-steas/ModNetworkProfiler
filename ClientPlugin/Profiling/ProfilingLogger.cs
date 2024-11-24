@@ -93,6 +93,7 @@ namespace ModNetworkProfiler.Profiling
         {
             if (_wasClosed)
             {
+                _outputFile?.Close(); // double-check
                 _wasClosed = false;
                 _outputFile = CreateFile();
                 _outputFile.WriteLine("Tick");
