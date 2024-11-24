@@ -62,12 +62,14 @@ namespace ClientPlugin.Window
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            ModeRadioButton_Serialization.Checked = !ModeRadioButton_Network.Checked;
+            //ModeRadioButton_Serialization.Checked = !ModeRadioButton_Network.Checked;
+            ModeRadioButton_Serialization.Checked = false;
         }
 
         private void ModeRadioButton_Serialization_CheckedChanged(object sender, EventArgs e)
         {
             ModeRadioButton_Network.Checked = !ModeRadioButton_Serialization.Checked;
+            ModeRadioButton_Serialization.Checked = false;
         }
     }
 }
