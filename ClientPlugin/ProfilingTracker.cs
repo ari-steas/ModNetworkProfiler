@@ -7,6 +7,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using Sandbox.ModAPI;
+using VRage.Network;
 
 namespace ClientPlugin
 {
@@ -73,6 +74,13 @@ namespace ClientPlugin
         {
             //si.WriteLine($"D: {length}: " + obj.GetType().FullName);
             //si.Flush();
+        }
+
+        public void UnregisterAll()
+        {
+            Plugin.Window?.UnregisterAll();
+            IncomingMessagesTick.Clear();
+            DeclaringTypeMap.Clear();
         }
 
         #endregion

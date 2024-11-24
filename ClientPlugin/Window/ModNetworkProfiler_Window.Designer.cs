@@ -175,6 +175,24 @@ namespace ClientPlugin.Window
             NetworkDownList.EndUpdate();
         }
 
+        public void UnregisterAll()
+        {
+            if (IsDisposed)
+                return;
+
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker) delegate {
+                    UnregisterAll();
+                });
+                return;
+            }
+
+            NetworkDownList.BeginUpdate();
+            NetworkDownList.Nodes.Clear();
+            NetworkDownList.EndUpdate();
+        }
+
         public void RegisterUpHandler(ushort id)
         {
             if (IsDisposed)
