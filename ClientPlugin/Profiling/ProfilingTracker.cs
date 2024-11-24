@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using ClientPlugin.Profiling;
 using Sandbox.ModAPI;
 using VRage.Network;
 using VRage.Utils;
@@ -21,6 +22,8 @@ namespace ClientPlugin
         public long CurrentInterval = 0;
 
         private bool IsPaused = false; // Play/Pause state
+        private ProfilingLogger _downLogger = new ProfilingLogger("Down");
+        private ProfilingLogger _upLogger = new ProfilingLogger("Up");
 
         #region Tracking Methods
 
@@ -30,6 +33,7 @@ namespace ClientPlugin
             IncomingMessagesTick[networkId] = new Queue<Message>();
             Plugin.Window?.RegisterDownHandler(GetNetworkIdName(networkId), networkId);
             MyLog.Default.WriteLineAndConsole("[ModNetworkProfiler] Registered network handler " + networkId);
+            _downLogger.AddHandler(networkId);
         }
 
         public bool UnregisterNetworkHandler(ushort networkId)
@@ -51,6 +55,8 @@ namespace ClientPlugin
                 Plugin.Window.RegisterUpHandler(networkId);
             }
             OutgoingMessagesTick[networkId].Enqueue(new Message(messageSize));
+            _upLogger.AddHandler(networkId);
+            _upLogger.QueueData(networkId, messageSize);
         }
 
         public void LogReceiveMessage(ushort networkId, int messageSize)
@@ -63,6 +69,7 @@ namespace ClientPlugin
             {
                 IncomingMessagesTick[networkId].Enqueue(new Message(messageSize));
             }
+            _downLogger.QueueData(networkId, messageSize);
         }
 
 
@@ -87,6 +94,9 @@ namespace ClientPlugin
             IncomingMessagesTick.Clear();
             OutgoingMessagesTick.Clear();
             DeclaringTypeMap.Clear();
+
+            _upLogger.Close();
+            _downLogger.Close();
         }
 
         #endregion
@@ -225,6 +235,8 @@ namespace ClientPlugin
                         CurrentInterval = queueInterval;
                 }
             }
+
+            _downLogger.OnTick();
         }
 
         public string GetNetworkIdName(ushort networkId)
