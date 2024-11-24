@@ -45,7 +45,7 @@ namespace ClientPlugin.Patches
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(MyModAPIHelper.MyMultiplayer), "HandleMessage")]
-        public static void RegisterSecureMessageHandlerPrefix(ushort id, byte[] message)
+        public static void HandleMessagePrefix(ushort id, byte[] message)
         {
             Tracker?.LogReceiveMessage(id, message.Length);
         }

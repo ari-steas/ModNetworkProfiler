@@ -495,7 +495,8 @@
   <ItemGroup>
     <Compile Include="Patches\SerializationPatch.cs" />
     <Compile Include="Patches\SessionPatch.cs" />
-    <Compile Include="ProfilingTracker.cs" />
+    <Compile Include="Profiling\ProfilingLogger.cs" />
+    <Compile Include="Profiling\ProfilingTracker.cs" />
     <Compile Include="Window\ModNetworkProfiler_Window.cs">
       <SubType>Form</SubType>
     </Compile>
