@@ -40,6 +40,9 @@ namespace ModNetworkProfiler.Profiling
 
         public void QueueData(ushort id, int size)
         {
+            if (!_dataBuffer.ContainsKey(id))
+                AddHandler(id);
+
             _dataBuffer[id] += size;
         }
 
