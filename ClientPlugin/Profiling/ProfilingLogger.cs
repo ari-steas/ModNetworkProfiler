@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using HarmonyLib;
 using VRage.FileSystem;
+using VRage.Utils;
 
 namespace ModNetworkProfiler.Profiling
 {
@@ -95,21 +96,35 @@ namespace ModNetworkProfiler.Profiling
 
         private void WriteLine(object text)
         {
-            using (TextWriter outputFile = CreateFile(_wasClosed))
+            try
             {
-                _wasClosed = false;
-                outputFile.WriteLine(text);
-                outputFile.Flush();
+                using (TextWriter outputFile = CreateFile(_wasClosed))
+                {
+                    _wasClosed = false;
+                    outputFile.WriteLine(text);
+                    outputFile.Flush();
+                }
+            }
+            catch (Exception ex)
+            {
+                MyLog.Default.WriteLineAndConsole(ex.ToString());
             }
         }
 
         private void Write(object text)
         {
-            using (TextWriter outputFile = CreateFile(_wasClosed))
+            try
             {
-                _wasClosed = false;
-                outputFile.Write(text);
-                outputFile.Flush();
+                using (TextWriter outputFile = CreateFile(_wasClosed))
+                {
+                    _wasClosed = false;
+                    outputFile.Write(text);
+                    outputFile.Flush();
+                }
+            }
+            catch (Exception ex)
+            {
+                MyLog.Default.WriteLineAndConsole(ex.ToString());
             }
         }
     }
