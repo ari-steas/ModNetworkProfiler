@@ -9,19 +9,17 @@ namespace ModNetworkProfiler.Profiling
 {
     internal class ProfilingLogger
     {
-        private TextWriter _outputFile;
         private ushort[] _ids = Array.Empty<ushort>();
         private string _path;
         private Dictionary<ushort, int> _dataBuffer = new Dictionary<ushort, int>();
         private StringBuilder _lineBuffer = new StringBuilder();
         private int _ticks = 0;
-        private bool _wasClosed = false;
+        private bool _wasClosed = true;
 
         public ProfilingLogger(string name)
         {
             _path = Path.Combine(MyFileSystem.UserDataPath, $"ModNetworkProfiler_{name}.csv");
-            _outputFile = CreateFile();
-            _outputFile.WriteLine("Tick");
+            WriteLine("");
         }
 
         public void AddHandler(ushort id)
@@ -29,10 +27,11 @@ namespace ModNetworkProfiler.Profiling
             if (_ids.Contains(id))
                 return;
 
-            _outputFile.Close();
             string existingText = File.ReadAllText(_path);
-            existingText = existingText.Insert(existingText.IndexOf('\n')-1, "," + id);
-            _outputFile = CreateFile();
+            if (existingText.Contains("\n"))
+                existingText = existingText.Insert(existingText.IndexOf('\n') - 1, "," + id);
+            else
+                existingText = $"Tick,{id}";
             Write(existingText);
             
             _ids = _ids.AddToArray(id);
@@ -71,19 +70,21 @@ namespace ModNetworkProfiler.Profiling
 
         public void Close()
         {
-            _outputFile.Close();
             _ids = Array.Empty<ushort>();
             _dataBuffer.Clear();
             _wasClosed = true;
         }
 
-        private TextWriter CreateFile()
+        private TextWriter CreateFile(bool overwrite = false)
         {
             string path = Path.Combine(MyFileSystem.UserDataPath, _path);
-            Stream stream = MyFileSystem.OpenWrite(path, FileMode.Create);
+            Stream stream = MyFileSystem.OpenWrite(path, overwrite ? FileMode.Create : FileMode.OpenOrCreate);
             if (stream != null)
             {
-                return new StreamWriter(stream);
+                TextWriter writer = new StreamWriter(stream);
+                if (overwrite)
+                    writer.WriteLine("Tick");
+                return writer;
             }
 
             throw new FileNotFoundException();
@@ -91,29 +92,22 @@ namespace ModNetworkProfiler.Profiling
 
         private void WriteLine(object text)
         {
-            if (_wasClosed)
+            using (TextWriter outputFile = CreateFile(_wasClosed))
             {
-                _outputFile?.Close(); // double-check
                 _wasClosed = false;
-                _outputFile = CreateFile();
-                _outputFile.WriteLine("Tick");
+                outputFile.WriteLine(text);
+                outputFile.Flush();
             }
-
-            _outputFile.WriteLine(text);
-            _outputFile.Flush();
         }
 
         private void Write(object text)
         {
-            if (_wasClosed)
+            using (TextWriter outputFile = CreateFile(_wasClosed))
             {
                 _wasClosed = false;
-                _outputFile = CreateFile();
-                _outputFile.WriteLine("Tick");
+                outputFile.Write(text);
+                outputFile.Flush();
             }
-
-            _outputFile.Write(text);
-            _outputFile.Flush();
         }
     }
 }
