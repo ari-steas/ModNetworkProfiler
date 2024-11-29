@@ -5,6 +5,9 @@ using VRage.Utils;
 
 namespace ModNetworkProfiler.Profiling
 {
+    /// <summary>
+    /// Tracks and logs profiling data.
+    /// </summary>
     public class ProfilingTracker
     {
         public long LoggedInterval = 60 * TimeSpan.TicksPerSecond;

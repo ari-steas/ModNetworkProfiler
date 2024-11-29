@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using HarmonyLib;
 using VRage.FileSystem;
 using VRage.Utils;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 namespace ModNetworkProfiler.Profiling
 {
+    /// <summary>
+    /// Stores logging data to a single file, located in %AppData%\Roaming\Space Engineers\ModNetworkProfiler_[name].csv
+    /// </summary>
     internal class ProfilingLogger
     {
         private ushort[] _ids = Array.Empty<ushort>();
@@ -15,12 +20,10 @@ namespace ModNetworkProfiler.Profiling
         private Dictionary<ushort, int> _dataBuffer = new Dictionary<ushort, int>();
         private StringBuilder _lineBuffer = new StringBuilder();
         private int _ticks = 0;
-        private bool _wasClosed = true;
 
         public ProfilingLogger(string name)
         {
             _path = Path.Combine(MyFileSystem.UserDataPath, $"ModNetworkProfiler_{name}.csv");
-            WriteLine("");
         }
 
         public void AddHandler(ushort id)
@@ -28,15 +31,27 @@ namespace ModNetworkProfiler.Profiling
             if (_ids.Contains(id))
                 return;
 
-            string existingText = File.ReadAllText(_path);
-            if (existingText.Contains("\n"))
-                existingText = existingText.Insert(existingText.IndexOf('\n') - 1, "," + id);
-            else
-                existingText = $"Tick,{id}";
-            Write(existingText);
-            
             _ids = _ids.AddToArray(id);
             _dataBuffer[id] = 0;
+
+            try
+            {
+                // stupid bandaid logic
+                if (_ids.Length == 1)
+                    File.WriteAllText(_path, "");
+
+                string existingText = File.ReadAllText(_path);
+                if (existingText.Contains("\n"))
+                    existingText = existingText.Remove(0, existingText.IndexOf('\n')+1);
+
+                File.WriteAllText(_path,
+                    existingText.Insert(0,
+                        $"Tick,{string.Join(",", _ids.Select(theId => Plugin.Instance.Tracker.GetNetworkIdName(theId)))}\n"));
+            }
+            catch (Exception ex)
+            {
+                MyLog.Default.WriteLineAndConsole("[ModNetworkProfiler] I/O exception occured in ProfilingLogger.AddHandler!\n" + ex);
+            }
         }
 
         public void QueueData(ushort id, int size)
@@ -65,7 +80,14 @@ namespace ModNetworkProfiler.Profiling
 
             if (hadNonZeroValue)
             {
-                WriteLine(_lineBuffer);
+                try
+                {
+                    File.AppendAllText(_path, _lineBuffer.Append('\n').ToString());
+                }
+                catch (Exception ex)
+                {
+                    MyLog.Default.WriteLineAndConsole("[ModNetworkProfiler] Write exception occured in ProfilingLogger.OnTick!\n" + ex);
+                }
             }
 
             _lineBuffer.Clear();
@@ -76,56 +98,9 @@ namespace ModNetworkProfiler.Profiling
         {
             _ids = Array.Empty<ushort>();
             _dataBuffer.Clear();
-            _wasClosed = true;
-        }
-
-        private TextWriter CreateFile(bool overwrite = false)
-        {
-            string path = Path.Combine(MyFileSystem.UserDataPath, _path);
-            Stream stream = MyFileSystem.OpenWrite(path, overwrite ? FileMode.Create : FileMode.OpenOrCreate);
-            if (stream != null)
-            {
-                TextWriter writer = new StreamWriter(stream);
-                if (overwrite)
-                    writer.WriteLine("Tick");
-                return writer;
-            }
-
-            throw new FileNotFoundException();
-        }
-
-        private void WriteLine(object text)
-        {
-            try
-            {
-                using (TextWriter outputFile = CreateFile(_wasClosed))
-                {
-                    _wasClosed = false;
-                    outputFile.WriteLine(text);
-                    outputFile.Flush();
-                }
-            }
-            catch (Exception ex)
-            {
-                MyLog.Default.WriteLineAndConsole(ex.ToString());
-            }
-        }
-
-        private void Write(object text)
-        {
-            try
-            {
-                using (TextWriter outputFile = CreateFile(_wasClosed))
-                {
-                    _wasClosed = false;
-                    outputFile.Write(text);
-                    outputFile.Flush();
-                }
-            }
-            catch (Exception ex)
-            {
-                MyLog.Default.WriteLineAndConsole(ex.ToString());
-            }
+            _ticks = 0;
+            _lineBuffer.Clear();
+            MyLog.Default.WriteLineAndConsole($"[ModNetworkProfiler] Closing logging file {_path}.");
         }
     }
 }
