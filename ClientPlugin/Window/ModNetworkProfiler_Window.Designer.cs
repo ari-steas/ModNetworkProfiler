@@ -246,8 +246,8 @@ namespace ModNetworkProfiler.Window
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.NetworkDownTitle = new System.Windows.Forms.Label();
             this.NetworkDownList = new System.Windows.Forms.TreeView();
             this.DebugLabel = new System.Windows.Forms.Label();
@@ -257,14 +257,15 @@ namespace ModNetworkProfiler.Window
             this.playButton = new System.Windows.Forms.Button();
             this.pauseButton = new System.Windows.Forms.Button();
             this.ListLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.GraphLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.ModeRadioButton_Network = new System.Windows.Forms.RadioButton();
             this.ModeLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.ModeRadioButton_Network = new System.Windows.Forms.RadioButton();
             this.ModeRadioButton_Serialization = new System.Windows.Forms.RadioButton();
+            this.GraphLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.ListLayoutPanel.SuspendLayout();
-            this.GraphLayoutPanel.SuspendLayout();
             this.ModeLayoutPanel.SuspendLayout();
+            this.GraphLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // NetworkDownTitle
@@ -303,11 +304,11 @@ namespace ModNetworkProfiler.Window
             this.chart1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.chart1.BackSecondaryColor = System.Drawing.Color.Transparent;
             this.chart1.BorderlineColor = System.Drawing.Color.Transparent;
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
             this.chart1.Cursor = System.Windows.Forms.Cursors.Default;
-            legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(3, 2);
             this.chart1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chart1.Name = "chart1";
@@ -348,7 +349,7 @@ namespace ModNetworkProfiler.Window
             this.playButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.playButton.ForeColor = System.Drawing.Color.White;
             this.playButton.Location = new System.Drawing.Point(112, 744);
-            this.playButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.playButton.Margin = new System.Windows.Forms.Padding(4);
             this.playButton.Name = "playButton";
             this.playButton.Size = new System.Drawing.Size(100, 28);
             this.playButton.TabIndex = 6;
@@ -361,7 +362,7 @@ namespace ModNetworkProfiler.Window
             this.pauseButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.pauseButton.ForeColor = System.Drawing.Color.White;
             this.pauseButton.Location = new System.Drawing.Point(4, 744);
-            this.pauseButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pauseButton.Margin = new System.Windows.Forms.Padding(4);
             this.pauseButton.Name = "pauseButton";
             this.pauseButton.Size = new System.Drawing.Size(100, 28);
             this.pauseButton.TabIndex = 7;
@@ -383,14 +384,14 @@ namespace ModNetworkProfiler.Window
             this.ListLayoutPanel.Size = new System.Drawing.Size(631, 794);
             this.ListLayoutPanel.TabIndex = 8;
             // 
-            // GraphLayoutPanel
+            // ModeLayoutPanel
             // 
-            this.GraphLayoutPanel.Controls.Add(this.chart1);
-            this.GraphLayoutPanel.Controls.Add(this.DebugLabel);
-            this.GraphLayoutPanel.Location = new System.Drawing.Point(788, 43);
-            this.GraphLayoutPanel.Name = "GraphLayoutPanel";
-            this.GraphLayoutPanel.Size = new System.Drawing.Size(725, 794);
-            this.GraphLayoutPanel.TabIndex = 9;
+            this.ModeLayoutPanel.Controls.Add(this.ModeRadioButton_Network);
+            this.ModeLayoutPanel.Controls.Add(this.ModeRadioButton_Serialization);
+            this.ModeLayoutPanel.Location = new System.Drawing.Point(435, 743);
+            this.ModeLayoutPanel.Name = "ModeLayoutPanel";
+            this.ModeLayoutPanel.Size = new System.Drawing.Size(193, 51);
+            this.ModeLayoutPanel.TabIndex = 9;
             // 
             // ModeRadioButton_Network
             // 
@@ -405,15 +406,6 @@ namespace ModNetworkProfiler.Window
             this.ModeRadioButton_Network.UseVisualStyleBackColor = true;
             this.ModeRadioButton_Network.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
-            // ModeLayoutPanel
-            // 
-            this.ModeLayoutPanel.Controls.Add(this.ModeRadioButton_Network);
-            this.ModeLayoutPanel.Controls.Add(this.ModeRadioButton_Serialization);
-            this.ModeLayoutPanel.Location = new System.Drawing.Point(435, 743);
-            this.ModeLayoutPanel.Name = "ModeLayoutPanel";
-            this.ModeLayoutPanel.Size = new System.Drawing.Size(193, 51);
-            this.ModeLayoutPanel.TabIndex = 9;
-            // 
             // ModeRadioButton_Serialization
             // 
             this.ModeRadioButton_Serialization.AutoSize = true;
@@ -425,12 +417,31 @@ namespace ModNetworkProfiler.Window
             this.ModeRadioButton_Serialization.UseVisualStyleBackColor = true;
             this.ModeRadioButton_Serialization.CheckedChanged += new System.EventHandler(this.ModeRadioButton_Serialization_CheckedChanged);
             // 
+            // GraphLayoutPanel
+            // 
+            this.GraphLayoutPanel.Controls.Add(this.chart1);
+            this.GraphLayoutPanel.Controls.Add(this.DebugLabel);
+            this.GraphLayoutPanel.Location = new System.Drawing.Point(788, 43);
+            this.GraphLayoutPanel.Name = "GraphLayoutPanel";
+            this.GraphLayoutPanel.Size = new System.Drawing.Size(725, 794);
+            this.GraphLayoutPanel.TabIndex = 9;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(60, 838);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(512, 16);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Logs can be found at %appdata%\\Space Engineers\\ModNetworkProfiler_[name].csv";
+            // 
             // ModNetworkProfiler_Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1580, 879);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.ListLayoutPanel);
             this.Controls.Add(this.GraphLayoutPanel);
             this.ForeColor = System.Drawing.SystemColors.Control;
@@ -441,11 +452,12 @@ namespace ModNetworkProfiler.Window
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ListLayoutPanel.ResumeLayout(false);
             this.ListLayoutPanel.PerformLayout();
-            this.GraphLayoutPanel.ResumeLayout(false);
-            this.GraphLayoutPanel.PerformLayout();
             this.ModeLayoutPanel.ResumeLayout(false);
             this.ModeLayoutPanel.PerformLayout();
+            this.GraphLayoutPanel.ResumeLayout(false);
+            this.GraphLayoutPanel.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -464,5 +476,6 @@ namespace ModNetworkProfiler.Window
         private FlowLayoutPanel ModeLayoutPanel;
         private RadioButton ModeRadioButton_Network;
         private RadioButton ModeRadioButton_Serialization;
+        private Label label1;
     }
 }
