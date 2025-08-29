@@ -59,9 +59,6 @@ namespace ModNetworkProfiler.Window
             if (IsDisposed || Tracker == null)
                 return;
 
-            if (ProfileGraph == null)
-                ProfileGraph = new ProfileGraph(chart1);
-
             if (InvokeRequired)
             {
                 if (IsUpdating)
@@ -71,6 +68,9 @@ namespace ModNetworkProfiler.Window
                 });
                 return;
             }
+
+            if (ProfileGraph == null)
+                ProfileGraph = new ProfileGraph(chart1);
 
             IsUpdating = true;
             if (!_watch.IsRunning)
